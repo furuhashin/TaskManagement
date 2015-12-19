@@ -3,6 +3,7 @@
 class StatusController extends Controller//Controllerクラスのインスタンス先※Controllerクラスはabstrastクラスなので必ずインスタンス化される
 {
     protected $auth_actions = array('index', 'post');
+
     public function indexAction()
     {
         $user = $this->session->get('user');

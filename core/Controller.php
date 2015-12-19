@@ -44,7 +44,7 @@ abstract class Controller
 			'base_url' => $this->request->getBaseUrl(),
 			'session' => $this->session,
 			);
-		$view = new View($this->application->getViewDir(), $defaults);//viewクラスのコンストラクタの渡される
+		$view = new View($this->application->getViewDir(), $defaults);//viewクラスのコンストラクタに渡される
 
 		if (is_null($template)) {
 			$template = $this->action_name;
