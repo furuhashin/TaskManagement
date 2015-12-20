@@ -9,7 +9,7 @@ class DbManager
 	{
 		$params = array_merge(array(
 			'dsn' => null,
-			'user' => 'root',
+			'user' => '',
 			'password' => '',
 			'options' => array(),
 			),$params);

@@ -65,11 +65,11 @@ class AccountController extends Controller//Controllerクラスのインスタ�
 	public function indexAction()
 	{
 		$user = $this->session->get('user');
-		$followings = $this->db_manager->get('User')->fetchAllFollowingsByUserId($user['id']);
+		//$followings = $this->db_manager->get('User')->fetchAllFollowingsByUserId($user['id']);
 
 		return $this->render(array(
 			'user' => $user,
-			'followings' => $followings,
+			//'followings' => $followings,
 			));
 	}
 

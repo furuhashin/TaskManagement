@@ -5,13 +5,12 @@ class UserRepository extends DbRepository
 	public function insert($user_name, $password)
 	{
 		$password = $this->hashPassword($password);
-		$now = new DateTime();//定義済みクラス
+		//$now = new DateTime();//定義済みクラス
 
-		$sql = "INSERT INTO user(user_name, password, created_at) VALUES(:user_name, :password, :created_at)";
+		$sql = "INSERT INTO user(user_name, password) VALUES(:user_name, :password)";
 		$stmt = $this->execute($sql, array(
 			':user_name' => $user_name,
 			':password' => $password,
-			':created_at' => $now->format('Y-m-d H:i:s'),
 			));
 	}
 

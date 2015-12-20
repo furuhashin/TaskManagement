@@ -7,7 +7,7 @@ class StatusController extends Controller//Controllerクラスのインスタン
     public function indexAction()
     {
         $user = $this->session->get('user');
-        $statuses = $this->db_manager->get('Status')->fetchAllPersonalArchivesByUserId($user['id']);//StatusRepositoryクラスのインスタンスを取得し、同クラスのメソッドの実行
+        $statuses = $this->db_manager->get('Status')->fetchAllTaskName();//StatusRepositoryクラスのインスタンスを取得し、同クラスのメソッドの実行
 
       return $this->render(array(//viewファイルで使用する変数を定義
             'statuses' => $statuses,
