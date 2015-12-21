@@ -34,20 +34,35 @@ class StatusController extends Controller//Controllerクラスのインスタン
     }
 
 
-    public function previewAction()//新規投稿画面のレンダリング
+    public function previewAction()//プレビュー画面のレンダリング
     {
-
+        $errors = array();
         $task_name = $this->request->getPost('task_name');
         $status_id = $this->request->getPost('status_id');
         $deadline = $this->request->getPost('deadline');
 
+        if (!strlen($task_name)) {
+            $errors[] = 'タスク名を入力してください。';
+        } elseif (mb_strlen($task_name) > 100) {
+            $errors[] = 'ひとことは100文字以内で入力してください。';
+        }
 
+        if (count($errors) === 0) {
+            return $this->render(array(
+                'task_name' => $task_name,
+                'status_id' => $status_id,
+                'deadline' => $deadline,
+                '_token' => $this->generateCsrfToken('status/insert'),
+            ),'preview');
+        }
         return $this->render(array(
+            'errors' => $errors,
             'task_name' => $task_name,
             'status_id' => $status_id,
             'deadline' => $deadline,
             '_token' => $this->generateCsrfToken('status/insert'),
-        ),'preview');
+            ), 'insert');
+
     }
 
     public function getstatusidAction()
