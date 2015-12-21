@@ -9,14 +9,13 @@
 <body>
 
 	<div id = "main">
-		<?php echo $_content; ?>
+		<?php echo $_content; ?><!--取得結果の表示-->
 	</div>
 
 	<div id="nav">
 		<p>
 			<?php if ($session->isAuthenticated()): ?>
-			<a href="<?php echo $base_url; ?>/">ホーム</a>
-			<a href="<?php echo $base_url; ?>/account">アカウント</a>
+
 			<?php else: ?>
 			<a href="<?php echo $base_url; ?>/account/signin">ログイン</a>
 			<?php endif; ?>

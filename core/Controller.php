@@ -57,7 +57,7 @@ abstract class Controller
 
 	protected function forward404()
 	{
-		throw new HttpNotFoundException('Forwarded  404 page from' . $this->controller_name . '/' . $this->action_name);
+		throw new HttpNotFoundException('Forwarded  404 page from ' . $this->controller_name . '/' . $this->action_name);
 	}
 
 	protected function redirect($url)

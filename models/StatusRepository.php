@@ -17,9 +17,15 @@ class StatusRepository extends DbRepository
 
     public function fetchAllTaskName()
     {
-       $sql = "SELECT task_name, status_name, dead_line FROM tasks";
+        $sql = "SELECT task_name, status_id, deadline FROM tasks";
+        return $this->fetchAll($sql);
     }
 
+    public function fetchStatusId()
+    {
+        $sql = "SELECT * FROM status";
+        return $this->fetchAll($sql);
+    }
 
 
 

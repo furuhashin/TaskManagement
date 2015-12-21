@@ -1,7 +1,7 @@
 <?php $this->setLayoutVar('title','ホーム') ?>
 
 <h2>タスク一覧</h2>
-
+<a href="<?php echo $base_url; ?>/status/insert_rend">新規追加</a>
 <form action = "<?php echo $base_url; ?>/status/post" method="post">
     <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>" />
 
