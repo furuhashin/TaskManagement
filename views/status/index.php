@@ -13,6 +13,6 @@
 
 <div id="statuses">
     <?php foreach($statuses as $status): ?><!--$statusesはStatusControllerクラスで生成される※ここで出力がループする-->
-    <?php echo $this->render('status/status', array('status' => $status)); ?>
+    <?php echo $this->render('status/status', array('status' => $status)); ?><!--viewクラスのrender()※controllerクラスではない-->
     <?php endforeach; ?>
 </div>

@@ -1,9 +1,9 @@
 <?php $this->setLayoutVar('title','ホーム') ?>
 
-<h2>タスク新規追加</h2>
-<p>タスクを入力してください</p>
+<h2>タスク削除画面</h2>
+<p>このタスクを削除しますか?</p>
 
-<form action = "<?php echo $base_url; ?>/status/preview" method="post">
+<form action = "<?php echo $base_url; ?>/status/delete" method="post">
     <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>" />
 
     <?php if (isset($errors) && count($errors)>0): ?>
@@ -22,10 +22,7 @@
         <tr>
             <td>ステータス</td>
             <td>
-                <SELECT name="status_name">
-                    <OPTION value= "未処理">未処理</OPTION><!--$status_id[0]の値を取得したい-->
-                    <OPTION value="仕掛中">仕掛中</OPTION>
-                    <OPTION value="完了">完了</OPTION>
+                td><textarea  name="status_name" rows="2" cols="60" readonly><?php echo $this->escape($status_name); ?></textarea></td>
             </td>
         </tr>
     </table>

@@ -2,22 +2,22 @@
 
 class StatusRepository extends DbRepository
 {
-    public function insert($task_name,$user_id,$status_id,$dead_line)
+    public function insert($task_name,$user_id,$status_id,$deadline)
     {
 
-        $sql = "INSERT INTO tasks(task_name, user_id,status_id, deagline) VALUES(:task_name,:user_id, :status_id, :deadline)";
+        $sql = "INSERT INTO tasks(task_name, user_id,status_id, deadline) VALUES(:task_name,:user_id,:status_id, :deadline)";
 
         $stmt = $this->execute($sql, array(
             ':task_name' => $task_name,
             ':user_id' => $user_id,
             ':status_id' => $status_id,
-            ':dead_line' => $dead_line,
+            ':deadline' => $deadline,
         ));
     }
 
     public function fetchAllTaskName()
     {
-        $sql = "SELECT task_name, status_id, deadline FROM tasks";
+        $sql = "SELECT id, task_name, status_name, deadline FROM tasks LEFT JOIN status ON tasks.status_id=status.status_id";
         return $this->fetchAll($sql);
     }
 
@@ -49,15 +49,13 @@ class StatusRepository extends DbRepository
 //        return $this->fetchAll($sql,array(':user_id' => $user_id));
 //    }
 
-//    public function fetchByIdAndUserName($id,$user_name)
-//    {
-//        $sql = "SELECT a.*, u.user_name FROM status a LEFT JOIN user u ON u.id = a.user_id
-//WHERE a.id = :id
-//AND u.user_name = :user_name";
-//
-//        return $this->fetch($sql,array(
-//            ':id' => $id,
-//            ':user_name' => $user_name,
-//        ));
-//    }
+   public function fetchById($id)
+    {
+        $sql = "SELECT * FROM tasks LEFT JOIN status ON tasks.status_id = status.status_id
+WHERE tasks.id = :id";
+
+        return $this->fetch($sql,array(
+            ':id' => $id,
+        ));
+    }
 }
