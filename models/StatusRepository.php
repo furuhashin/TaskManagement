@@ -27,7 +27,28 @@ class StatusRepository extends DbRepository
         return $this->fetchAll($sql);
     }
 
+    public function delete($id)
+    {
 
+        $sql = "DELETE FROM tasks WHERE id = :id";
+
+        $stmt = $this->execute($sql, array(
+            ':id' => $id,
+        ));
+    }
+
+    public function edit($task_name,$status_id,$deadline,$id)
+    {
+
+        $sql = "UPDATE tasks SET task_name =:task_name, status_id = :status_id, deadline = :deadline WHERE id = :id";
+
+        $stmt = $this->execute($sql, array(
+            ':task_name' => $task_name,
+            ':status_id' => $status_id,
+            ':deadline' => $deadline,
+            ':id' => $id,
+        ));
+    }
 
 //    public function fetchAllPersonalArchivesByUserId($user_id)
 //    {
@@ -49,7 +70,7 @@ class StatusRepository extends DbRepository
 //        return $this->fetchAll($sql,array(':user_id' => $user_id));
 //    }
 
-   public function fetchById($id)
+   public function fetchTaskById($id)
     {
         $sql = "SELECT * FROM tasks LEFT JOIN status ON tasks.status_id = status.status_id
 WHERE tasks.id = :id";

@@ -3,7 +3,7 @@
 <h2>タスク新規追加</h2>
 <p>タスクを入力してください</p>
 
-<form action = "<?php echo $base_url; ?>/status/preview" method="post">
+<form action = "<?php echo $base_url; ?>/status/insert_preview" method="post">
     <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>" />
 
     <?php if (isset($errors) && count($errors)>0): ?>

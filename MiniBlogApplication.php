@@ -23,10 +23,9 @@ class MiniBlogApplication extends Application
 			=> array('controller' => 'status', 'action' => 'show'),
 			'/status/:action'
 			=> array('controller' => 'status'),
-			'/status/delete/:id'
-			=> array('controller' => 'status','action' => 'delete'),
-			'/status/change/:id'
-			=> array('controller' => 'status','action' => 'change'),
+			'/status/:action/:id'
+			=> array('controller' => 'status'),
+
 
 			//AcountControllerのルーティング
 			'/account'
