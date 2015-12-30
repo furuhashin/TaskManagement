@@ -12,7 +12,19 @@
 </form>
 
 <div id="statuses">
+    <table  class="tablesorter">
+        <thead>
+        <tr>
+            <th>タスク名</th>
+            <th>期限</th>
+            <th>ステータス</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
     <?php foreach($statuses as $status): ?><!--$statusesはStatusControllerクラスで生成される※ここで出力がループする-->
     <?php echo $this->render('status/status', array('status' => $status)); ?><!--viewクラスのrender()※controllerクラスではない-->
     <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
