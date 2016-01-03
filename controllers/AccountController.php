@@ -1,6 +1,6 @@
 <?php
 
-class AccountController extends Controller//Controllerクラスのインスタンス先※Controllerクラスはabstrastクラスなので必ずインスタンス化日される
+class AccountController extends Controller
 {
 	protected $auth_actions = array('index', 'signout','follow');
 	public function signupAction()
@@ -48,8 +48,8 @@ class AccountController extends Controller//Controllerクラスのインスタ�
 
 		$this->session->setAuthenticated(true);
 
-		$user = $this->db_manager->get('User')->fetchByUserName($user_name);//DBのuserテーブルから一行持ってきている
-		$this->session->set('user', $user);//取得した一行をセッション変数に格納している
+		$user = $this->db_manager->get('User')->fetchByUserName($user_name);//userテーブルから情報を取得
+		$this->session->set('user', $user);//取得した情報をセッション変数に格納
 
 		return $this->redirect('/');
 		}
@@ -65,11 +65,9 @@ class AccountController extends Controller//Controllerクラスのインスタ�
 	public function indexAction()
 	{
 		$user = $this->session->get('user');
-		//$followings = $this->db_manager->get('User')->fetchAllFollowingsByUserId($user['id']);
 
 		return $this->render(array(
 			'user' => $user,
-			//'followings' => $followings,
 			));
 	}
 
@@ -118,7 +116,7 @@ class AccountController extends Controller//Controllerクラスのインスタ�
 			$user_repository = $this->db_manager->get('User');
 			$user = $user_repository->fetchByUserName($user_name);
 
-			if (!$user || ($user['password'] !== $user_repository->hashPassword($password))){
+			if (!$user || ($user['password'] !== $user_repository->Password($password))){
 				$errors[] = 'ユーザIDかパスワードが不正です';
 			} else {
 				$this->session->setAuthenticated(true);
@@ -143,97 +141,6 @@ class AccountController extends Controller//Controllerクラスのインスタ�
 
 		return $this->redirect('/account/signin');
 	}
-
-	public function followAction()
-
-
-	{
-		if (!$this->request->isPost()) {
-			$this->forward404();
-		}
-
-		$following_name = $this->request->getPost('following_name');
-		if (!$following_name){
-			$this->forward404();
-		}
-
-		$token = $this->request->getPost('_token');
-		if (!$this->checkCsrfToken('account/follow',$token)) {
-			return $this->redirect('/user/' .$following_name);
-		}
-
-		$follow_user = $this->db_manager->get('User')->fetchByUserName($following_name);
-		if (!$follow_user) {
-			$this->forward404();
-		}
-
-		$user = $this->session->get('user');
-
-		$following_repository = $this->db_manager->get('Following');
-		if ($user['id'] !== $follow_user['id'] && !$following_repository->isFollowing($user['id'], $follow_user['id'])){
-			$following_repository->insert($user['id'], $follow_user['id']);
-		}
-
-		return $this->redirect('/account');
-
-
-
-	}
-
-	public function passwdAction()//パスワード変更画面のレンダリング
-	{
-
-		return $this->render(array(
-				'_token' => $this->generateCsrfToken('account/changepasswd'),
-		),'changepasswd');
-	}
-
-	public function changepasswdAction()//実処理
-	{
-		if (!$this->request->isPost()) {
-			$this->forward404();
-		}
-
-		$token = $this->request->getPost('_token');
-
-		if (!$this->checkCsrfToken('account/changepasswd', $token)) {
-			return $this->redirect('/account');
-		}
-			$user = $this->session->get('user');
-			$password = $this->request->getPost('password');
-			$password1 = $this->request->getPost('password1');
-
-			$errors = array();
-
-			if (!strlen($password)) {
-				$errors[] = 'パスワードを入力してください';
-			}
-
-			if (!strlen($password1)) {
-				$errors[] = '再度パスワードを入力してください';
-			}
-
-			if ($password !== $password1){
-				$errors[] = '両方とも同じパスワードを入力してください';
-			}
-
-			if (count($errors) === 0){
-				$this->db_manager->get('User')->changeUsersPassword($user['user_name'], $password);
-				return $this->redirect('/');
-			}
-
-			return $this->render(array(
-					'user_name' => $user_name,
-					'password' => $password,
-					'errors' => $errors,
-					'_token' => $this->generateCsrfToken('account/changepasswd'),
-			),'changepasswd');
-
-
-	}
-
-
-
 
 
 }

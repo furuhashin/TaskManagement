@@ -24,7 +24,7 @@
 <table>
     <tr>
         <td>タスク名</td>
-        <td><textarea  name="task_name" rows="2" cols="60" readonly><?php echo $this->escape($task_name); ?></textarea></td> <!--escapeはviewクラスのメソッド-->
+        <td><textarea  name="task_name" rows="2" cols="60" readonly><?php echo $this->escape($task_name); ?></textarea></td>
     </tr>
     <tr>
         <td>期限</td>

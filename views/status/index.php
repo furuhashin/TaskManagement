@@ -1,4 +1,4 @@
-<?php $this->setLayoutVar('title','ホーム') ?>
+<?php if ($session->isAuthenticated()): ?>
 
 <h2>タスク一覧</h2>
 <a href="<?php echo $base_url; ?>/status/insert_rend">新規追加</a>
@@ -22,9 +22,10 @@
         </tr>
         </thead>
         <tbody>
-    <?php foreach($statuses as $status): ?><!--$statusesはStatusControllerクラスで生成される※ここで出力がループする-->
-    <?php echo $this->render('status/status', array('status' => $status)); ?><!--viewクラスのrender()※controllerクラスではない-->
+    <?php foreach($statuses as $status): ?>
+    <?php echo $this->render('status/status', array('status' => $status)); ?>
     <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+<?php endif; ?>

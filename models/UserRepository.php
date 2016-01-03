@@ -14,9 +14,9 @@ class UserRepository extends DbRepository
 			));
 	}
 
-	public function hashPassword($password)
+	public function Password($password)
 	{
-		return sha1($password . 'SecretKey');
+		return $password;
 	}
 
 	public function fetchByUserName($user_name)
@@ -36,21 +36,4 @@ class UserRepository extends DbRepository
 		return false;
 	}
 
-	public function fetchAllFollowingsByUserId($user_id)
-	{
-		$sql = "SELECT u.* FROM user u LEFT JOIN following f ON f.following_id = u.id WHERE f.user_id = :user_id";
-
-		return $this->fetchAll($sql, array(':user_id' => $user_id));
-
-	}
-
-	public function changeUsersPassword($user_name,$password)
-	{
-		$password = $this->hashPassword($password);
-		$sql = "UPDATE user SET password = :password where user_name = :user_name";
-
-		$stmt = $this->execute($sql, array(
-				':user_name' => $user_name,
-				':password' => $password,));
-	}
 }

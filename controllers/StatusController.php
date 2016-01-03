@@ -1,18 +1,17 @@
 <?php
 
-class StatusController extends Controller//Controllerクラスのインスタンス先※Controllerクラスはabstrastクラスなので必ずインスタンス化される
+class StatusController extends Controller
 {
     protected $auth_actions = array('index', 'post');
 
     public function indexAction()
     {
-        $user = $this->session->get('user');
-        $statuses = $this->db_manager->get('Status')->fetchAllTaskName($user['user_id']);//StatusRepositoryクラスのインスタンスを取得し、同クラスのメソッドの実行
+        $statuses = $this->db_manager->get('Status')->fetchAllTaskName();
 
-      return $this->render(array(//viewファイルで使用する変数を定義
+        return $this->render(array(//viewファイルで使用する変数を定義
             'statuses' => $statuses,
             'body' => '',
-            '_token' => $this->generateCsrfToken('status'),//viewファイルはindex.php
+            '_token' => $this->generateCsrfToken('status'),
         ));
     }
 
@@ -22,7 +21,6 @@ class StatusController extends Controller//Controllerクラスのインスタン
         $status_name = array_column($row, 'status_name');
 
         return $status_name;
-
     }
 
     public function insert_rendAction()//新規投稿画面のレンダリング
@@ -64,7 +62,6 @@ class StatusController extends Controller//Controllerクラスのインスタン
         $task_name = $this->request->getPost('task_name');
         $status_name = $this->getstatusidAction();
         $deadline = $this->request->getPost('deadline');
-
         $statuses = $this->db_manager->get('Status')->fetchTaskById($params['id']);
 
         return $this->render(array(
@@ -181,7 +178,7 @@ class StatusController extends Controller//Controllerクラスのインスタン
                 '_token' => $this->generateCsrfToken('status/insert'),
             ), 'finish');
         }
-        
+
     }
 
     public function deleteAction($params)
@@ -247,42 +244,4 @@ class StatusController extends Controller//Controllerクラスのインスタン
 
     }
 
-
-
-    public function userAction($params)
-    {
-        $user = $this->db_manager->get('User')->fetchByUserName($params['user_name']);
-        if (!$user) {
-            $this->forward404();
-        }
-
-        $statuses = $this->db_manager->get('Status')->fetchAllByUserId($user['id']);
-
-        $following = null;
-        if ($this->session->isAuthenticated()){
-            $my = $this->session->get('user');
-            if ($my['id'] !== $user['id']){
-                $following = $this->db_manager->get('Following')->isFollowing($my['id'],$user['id']);//$followingには'true'or'false'が入る
-            }
-        }
-
-        return $this->render(array(//viewファイルで使用する変数を定義
-            'user' => $user,
-            'statuses' => $statuses,
-            'following' => $following,
-            '_token' => $this->generateCsrfToken('account/follow'),
-        ));
-
-    }
-
-    public function showAction($params)
-    {
-        $status = $this->db_manager->get('Status')->fetchByIdAndUserName($params['id'],$params['user_name']);
-
-        if (!$status) {
-            $this->forward404();
-        }
-
-        return $this->render(array('status' => $status));//viewファイルで使用する変数を定義
-    }
 }
