@@ -6,7 +6,9 @@ class StatusController extends Controller
 
     public function indexAction()
     {
-        $statuses = $this->db_manager->get('Status')->fetchAllTaskName();
+        $sql = "SELECT id, task_name, status_name, deadline FROM tasks LEFT JOIN status ON tasks.status_id=status.status_id";
+        $statuses = $this->pager_search($sql);
+        //$statuses = $this->db_manager->get('Status')->fetchAllTaskName();
 
         return $this->render(array(//viewファイルで使用する変数を定義
             'statuses' => $statuses,

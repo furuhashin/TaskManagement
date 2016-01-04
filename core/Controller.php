@@ -103,4 +103,54 @@ abstract class Controller
 		return false;
 	}
 
+
+protected function pager_search($sql)
+{
+		//インストールしたPEARのPagerライブラリを読み込む
+		require_once("Pager/Pager.php");
+
+		//1ページあたりに表示するデータ数
+		$pagelength = "10";
+
+		//データを格納する配列
+		$data_array=array();
+
+		//SQLを実行する
+		$list = $this->db_manager->get('Status')->fetchAll($sql);
+
+		//データ数を取得する
+		$total = count($list);
+
+		//ページャーライブラリに渡す設定（パラメーター
+		$page=array(
+				"itemData"=>$list,  //アイテムの配列です。
+				"totalItems"=>$total, //合計アイテム数
+				"perPage"=>$pagelength, //１ページあたりの表示数
+				"mode"=>"Jumping",
+				"linkClass" => "list",
+				"curPageLinkClassName" => "list",
+				"altFirst"=>"First", //以下、文字表示設定　１ページ目のalt表示
+				"altPrev"=>"", //前のalt
+				'prevImg'=>"&lt;&lt; prev", //前へ　の文字表示
+				"altNext"=>"", //次へ　のalt
+				"nextImg"=>"next &gt;&gt;", //次へ　の文字表示
+				"altLast"=>"Last", //ラストのalt表示
+				"altPage"=>"",
+				"separator"=>" ", //数字と数字の間の文字
+				"append"=>1,
+				"urlVar"=>"page",//get属性
+		);
+
+		//Pagerに設定した項目を読み込ませます
+		$pager= Pager::factory($page);
+
+		//現在のページ配列（戻り値）を取得
+		$data_array['data'] = $pager->getPageData();
+		//ページ遷移のリンクリストを取得
+		$data_array['links'] = $pager->links;
+		$data_array['total'] = $pager->numItems();
+		//データ配列を返す
+		return $data_array;
+
+	}
 }

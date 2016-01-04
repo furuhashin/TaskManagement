@@ -9,7 +9,7 @@
 
 	<link href="js/tablesorter-master/dist/css/theme.default.min.css" rel="stylesheet">
 	<script src="js/tablesorter-master/dist/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-	<script src="js/tablesorter-master/dist/js/jquery.tablesorter.widgets.min.js"></script>
+	<script src="js/tablesorter-master/dist/js/jquery.tablesorter.widgets.min.js" type="text/javascript"></script>
 
 
 	<link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />

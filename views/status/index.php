@@ -22,9 +22,12 @@
         </tr>
         </thead>
         <tbody>
-    <?php foreach($statuses as $status): ?>
+    <?php foreach($statuses['data'] as $status): ?>
     <?php echo $this->render('status/status', array('status' => $status)); ?>
     <?php endforeach; ?>
+        <?php echo '<div class="pager">';
+            echo $statuses['links'];
+            echo '</div>'; ?>
         </tbody>
     </table>
 </div>
