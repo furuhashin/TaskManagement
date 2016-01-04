@@ -8,7 +8,6 @@ class StatusController extends Controller
     {
         $sql = "SELECT id, task_name, status_name, deadline FROM tasks LEFT JOIN status ON tasks.status_id=status.status_id";
         $statuses = $this->pager_search($sql);
-        //$statuses = $this->db_manager->get('Status')->fetchAllTaskName();
 
         return $this->render(array(//viewファイルで使用する変数を定義
             'statuses' => $statuses,
@@ -28,57 +27,39 @@ class StatusController extends Controller
     public function insert_rendAction()//新規投稿画面のレンダリング
     {
         $task_name = $this->request->getPost('task_name');
-        $status_name = $this->getstatusidAction();
+
         $deadline = $this->request->getPost('deadline');
 
 
         return $this->render(array(
             'task_name' => $task_name,
-            'status_name' => $status_name,
             'deadline' => $deadline,
             '_token' => $this->generateCsrfToken('status/insert'),
         ),'insert');
     }
 
-    public function edit_rendAction($params)//削除の確認画面のレンダリング
+    public function edit_rendAction($params)//編集確認画面のレンダリング
     {
-
-        $task_name = $this->request->getPost('task_name');
-        $status_name = $this->getstatusidAction();
-        $deadline = $this->request->getPost('deadline');
-
         $statuses = $this->db_manager->get('Status')->fetchTaskById($params['id']);
 
         return $this->render(array(
             'statuses' => $statuses,
-            'task_name' => $task_name,
-            'status_name' => $status_name,
-            'deadline' => $deadline,
             '_token' => $this->generateCsrfToken('status/edit_rend'),
         ),'edit_rend');
     }
 
     public function delete_previewAction($params)//削除の確認画面のレンダリング
     {
-
-        $task_name = $this->request->getPost('task_name');
-        $status_name = $this->getstatusidAction();
-        $deadline = $this->request->getPost('deadline');
         $statuses = $this->db_manager->get('Status')->fetchTaskById($params['id']);
 
         return $this->render(array(
             'statuses' => $statuses,
-            'task_name' => $task_name,
-            'status_name' => $status_name,
-            'deadline' => $deadline,
             '_token' => $this->generateCsrfToken('status/delete_preview'),
         ),'delete_preview');
     }
 
 
-
-
-    public function insert_previewAction()//プレビュー画面のレンダリング
+    public function insert_previewAction()//新規追加プレビュー画面のレンダリング
     {
         $errors = array();
         $task_name = $this->request->getPost('task_name');
@@ -201,7 +182,7 @@ class StatusController extends Controller
             'task_name' => $task_name,
             'status_name' => $status_name,
             'deadline' => $deadline,
-            '_token' => $this->generateCsrfToken('status/insert'),
+            '_token' => $this->generateCsrfToken('status/delete'),
         ), 'delete_finish');
 
     }

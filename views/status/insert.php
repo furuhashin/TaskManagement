@@ -1,4 +1,4 @@
-<?php $this->setLayoutVar('title','ホーム') ?>
+
 
 <h2>タスク新規追加</h2>
 <p>タスクを入力してください</p>
