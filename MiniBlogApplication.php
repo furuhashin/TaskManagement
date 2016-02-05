@@ -41,7 +41,7 @@ class MiniBlogApplication extends Application
 	protected function configure()//dbに接続するための情報
 	{
 		$this->db_manager->connect('master', array(
-			'dsn' => 'mysql:dbname=TaskManagement;host=localhost',
+			'dsn' => 'mysql:dbname=TaskManagementt;host=localhost',
 			'user' => 'root',
 			'password' => 'password',
 			));
